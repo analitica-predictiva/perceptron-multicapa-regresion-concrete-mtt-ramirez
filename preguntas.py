@@ -16,19 +16,20 @@ def pregunta_01():
     Carga y separación de los datos en `X` `y`
     """
     # Lea el archivo `concrete.csv` y asignelo al DataFrame `df`
-    df = pd.read_csv('concrete.csv')  
+    df = pd.read_csv("concrete.csv", sep=",")
 
     # Asigne la columna `strength` a la variable `y`.
-    y = df['strength'].copy()  
+    y = df["strength"]  
 
     # Asigne una copia del dataframe `df` a la variable `X`.
     X = df.copy()  
 
     # Remueva la columna `strength` del DataFrame `X`.
-    X.drop(['strength'], axis = 1, inplace=True) 
+    X=X.drop(["strength"], axis=1) 
 
     # Retorne `X` y `y`
     return X, y
+
 
 def pregunta_02():
     """
@@ -71,6 +72,7 @@ def pregunta_03():
     from sklearn.preprocessing import MinMaxScaler
     from sklearn.pipeline import Pipeline
 
+
     # Cree un pipeline que contenga un estimador MinMaxScaler y un estimador
     # MLPRegressor
     pipeline = Pipeline(
@@ -109,13 +111,13 @@ def pregunta_04():
     #   * Use parada temprana
 
     param_grid = {
-        'mlpregressor__hidden_layer_sizes': [(x,) for x in range(1,9)],  
-        'mlpregressor__activation': ['relu'],  
-        'mlpregressor__learning_rate': ['adaptive'],  
-        'mlpregressor__momentum': [(0.7), (0.8), (0.9)],  
-        'mlpregressor__learning_rate_init': [(0.01), (0.05), (0.1)],  
-        'mlpregressor__max_iter': [5000],  
-        'mlpregressor__early_stopping': [True],  
+        "mlpregressor__hidden_layer_sizes": list(range(1,9)),  
+        "mlpregressor__activation":["relu"],
+        "mlpregressor__learning_rate":["adaptive"],
+        "mlpregressor__momentum":[0.7,0.8,0.9],
+        "mlpregressor__learning_rate_init":[0.01,0.05,0.1],
+        "mlpregressor__max_iter":[5000],
+        "mlpregressor__early_stopping":[True],
     }
 
     estimator = pregunta_03()
@@ -128,7 +130,7 @@ def pregunta_04():
         estimator=estimator,
         param_grid=param_grid,
         cv = 5,  
-        scoring = 'r2'  
+        scoring="r2",
     )
 
     return gridsearchcv
